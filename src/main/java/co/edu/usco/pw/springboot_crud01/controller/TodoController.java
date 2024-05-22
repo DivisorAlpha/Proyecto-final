@@ -10,9 +10,11 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,8 +39,7 @@ public class TodoController {
 	@RequestMapping(value = "/list-todos", method = RequestMethod.GET)
 	public String showTodos(ModelMap model) {
 		String name = getLoggedInUserName(model);
-		model.put("todos", todoService.getTodosByUser(name));
-		// model.put("todos", service.retrieveTodos(name));
+		model.put("todo", todoService.getTodosByUser(name));
 		return "list-todos";
 	}
 
@@ -60,12 +61,12 @@ public class TodoController {
 
 	@RequestMapping(value = "/add-todo", method = RequestMethod.POST)
 	public String addTodo(ModelMap model, @Valid Todo todo, BindingResult result) {
-
+		
 		if (result.hasErrors()) {
 			return "todo";
 		}
 
-		todo.setUserName(getLoggedInUserName(model));
+		todo.setUsuario(getLoggedInUserName(model));
 		todoService.saveTodo(todo);
 		return "redirect:/list-todos";
 	}
@@ -91,9 +92,15 @@ public class TodoController {
 			return "todo";
 		}
 
-		todo.setUserName(getLoggedInUserName(model));
+		todo.setUsuario(getLoggedInUserName(model));
 		todoService.updateTodo(todo);
 		return "redirect:/list-todos";
+	}
+	
+	@GetMapping("/cancel")
+	public String cancelProcess(Model model) {
+	  // Cancel the process and exit
+	  return "redirect:/list-todos"; // Redirect to the home page or any other page you want
 	}
 
 }

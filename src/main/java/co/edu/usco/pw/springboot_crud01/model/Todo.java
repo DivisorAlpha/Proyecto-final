@@ -1,40 +1,39 @@
 package co.edu.usco.pw.springboot_crud01.model;
 
-import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "todos")
+@Table(name = "Clientes")
 public class Todo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-
-	private String userName;
-
-	@Size(min = 10, message = "Enter at least 10 Characters...")
-	private String description;
-
-	private Date targetDate;
 	
-	public Todo() {
-		super();
+	private String usuario;
+
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public Todo(String user, String desc, Date targetDate, boolean isDone) {
-		super();
-		this.userName = user;
-		this.description = desc;
-		this.targetDate = targetDate;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
+	private int cantidadVehiculos;
+	
+	@OneToMany(mappedBy = "todo", fetch = FetchType.LAZY)
+	private List<Vehiculos> vehiculos;
+	
+	
 	public long getId() {
 		return id;
 	}
@@ -43,27 +42,35 @@ public class Todo {
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return userName;
+	public int getCantidadVehiculos() {
+		return cantidadVehiculos;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setCantidadVehiculos(int cantidadVehiculos) {
+		this.cantidadVehiculos = cantidadVehiculos;
 	}
 
-	public String getDescription() {
-		return description;
+	public List<Vehiculos> getVehiculos() {
+		return vehiculos;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setVehiculos(List<Vehiculos> vehiculos) {
+		this.vehiculos = vehiculos;
 	}
 
-	public Date getTargetDate() {
-		return targetDate;
+	public Todo(int cantidadVehiculos, List<Vehiculos> vehiculos) {
+		super();
+		this.cantidadVehiculos = cantidadVehiculos;
+		this.vehiculos = vehiculos;
 	}
 
-	public void setTargetDate(Date targetDate) {
-		this.targetDate = targetDate;
+
+	public Todo() {
+		// TODO Auto-generated constructor stub
 	}
-}
+
+	
+	
+	
+
+	}
