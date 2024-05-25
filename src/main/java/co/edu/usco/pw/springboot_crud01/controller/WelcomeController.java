@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WelcomeController {
 
-	@GetMapping("/")
+	@GetMapping({"/","/home","/inicio"})
 	public String showWelcomePage(ModelMap model) {
 		model.put("name", getLoggedinUserName());
 		return "welcome";

@@ -2,24 +2,19 @@ package co.edu.usco.pw.springboot_crud01.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import co.edu.usco.pw.springboot_crud01.model.Todo;
 import co.edu.usco.pw.springboot_crud01.service.ITodoService;
 
@@ -36,10 +31,11 @@ public class TodoController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
 	}
 
-	@RequestMapping(value = "/list-todos", method = RequestMethod.GET)
+	@GetMapping("/list-todos")
 	public String showTodos(ModelMap model) {
 		String name = getLoggedInUserName(model);
-		model.put("todo", todoService.getTodosByUser(name));
+		model.put("todos", todoService.getTodosByUser(name));
+		// model.put("todos", service.retrieveTodos(name));
 		return "list-todos";
 	}
 
@@ -53,54 +49,48 @@ public class TodoController {
 		return principal.toString();
 	}
 
-	@RequestMapping(value = "/add-todo", method = RequestMethod.GET)
+	@GetMapping("/add-todo")
 	public String showAddTodoPage(ModelMap model) {
 		model.addAttribute("todo", new Todo());
 		return "todo";
 	}
 
-	@RequestMapping(value = "/add-todo", method = RequestMethod.POST)
+	@PostMapping("/add-todo")
 	public String addTodo(ModelMap model, @Valid Todo todo, BindingResult result) {
-		
+
 		if (result.hasErrors()) {
 			return "todo";
 		}
 
-		todo.setUsuario(getLoggedInUserName(model));
+		todo.setUserName(getLoggedInUserName(model));
 		todoService.saveTodo(todo);
 		return "redirect:/list-todos";
 	}
 
-	@RequestMapping(value = "/delete-todo", method = RequestMethod.GET)
+	@GetMapping("/delete-todo")
 	public String deleteTodo(@RequestParam long id) {
 		todoService.deleteTodo(id);
 		// service.deleteTodo(id);
 		return "redirect:/list-todos";
 	}
 
-	@RequestMapping(value = "/update-todo", method = RequestMethod.GET)
+	@GetMapping("/update-todo")
 	public String showUpdateTodoPage(@RequestParam long id, ModelMap model) {
 		Todo todo = todoService.getTodoById(id).get();
 		model.put("todo", todo);
 		return "todo";
 	}
 
-	@RequestMapping(value = "/update-todo", method = RequestMethod.POST)
+	@PostMapping("/update-todo")
 	public String updateTodo(ModelMap model, @Valid Todo todo, BindingResult result) {
 
 		if (result.hasErrors()) {
 			return "todo";
 		}
 
-		todo.setUsuario(getLoggedInUserName(model));
+		todo.setUserName(getLoggedInUserName(model));
 		todoService.updateTodo(todo);
 		return "redirect:/list-todos";
-	}
-	
-	@GetMapping("/cancel")
-	public String cancelProcess(Model model) {
-	  // Cancel the process and exit
-	  return "redirect:/list-todos"; // Redirect to the home page or any other page you want
 	}
 
 }

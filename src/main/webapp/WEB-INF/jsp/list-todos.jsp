@@ -3,30 +3,31 @@
 
 <div class="container">
 	<div>
-		<a type="button" class="btn btn-primary btn-md" href="/add-todo" id="agregarUser">Agregar vehiculo</a>
+		<a type="button" class="btn btn-primary btn-md" href="/add-todo">Adicionar Usuario</a>
 	</div>
 	<br>
 	<div class="panel panel-primary">
 		<div class="panel-heading">
-			<h3 style="margin-bottom: 20px">Lista de Vehiculos</h3>
+			<h3>Lista de Usuarios</h3>
 		</div>
 		<div class="panel-body">
-			<table class="table table-dark table-bordered table-striped">
+			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th width="10%">Nombre de usuario</th>
-						<th width="10%">Fecha Entrada</th>
-						<th width="10%">Usuario encargado</th>
-						<th width="10%">Placa de vehiculo</th>
-						<th width="10%">Tipo de vehiculo</th>
+						<th width="20%">Usuario</th>
+	                    <th width="20%">Fecha y Hora</th>
+	                    <th width="20%">Cantidad de Vehículos</th>
+	                    <th width="20%">Descripción</th>
+                    	<th width="20%"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${todos}" var="todo">
 						<tr>
+							<td>${todo.userName}</td>
+							<td><fmt:formatDate value="${todo.targetDate}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
+							<td>${todo.cantidadVehiculos}</td>
 							<td>${todo.description}</td>
-							<td><fmt:formatDate value="${todo.targetDate}"
-									pattern="dd/MM/yyyy" /></td>
 							<td><a type="button" class="btn btn-success"
 								href="/update-todo?id=${todo.id}">Actualizar</a>
 							<a type="button" class="btn btn-warning"
@@ -37,6 +38,7 @@
 			</table>
 		</div>
 	</div>
+
 </div>
-<script src="common/list-todos.js" type="text/javascript"></script>
+
 <%@ include file="common/footer.jsp"%>

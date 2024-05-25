@@ -1,11 +1,11 @@
 package co.edu.usco.pw.springboot_crud01.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import co.edu.usco.pw.springboot_crud01.model.Todo;
-import co.edu.usco.pw.springboot_crud01.model.Vehiculos;
 import co.edu.usco.pw.springboot_crud01.repository.TodoRepository;
 
 @Service
@@ -16,7 +16,7 @@ public class TodoService implements ITodoService {
 
 	@Override
 	public List<Todo> getTodosByUser(String user) {
-		return todoRepository.findByUsuario(user);
+		return todoRepository.findByUserName(user);
 	}
 
 	@Override
@@ -30,10 +30,12 @@ public class TodoService implements ITodoService {
 	}
 
 	@Override
-	public void addtodo(int cantidadVehiculos, List<Vehiculos> vehiculos) {
-		todoRepository.save(new Todo(cantidadVehiculos, vehiculos));
+	public void addTodo(String name, String desc, Date targetDate, boolean isDone) {
+		todoRepository.save(new Todo(name, desc, targetDate, isDone));
 	}
-
+	
+	
+	
 	@Override
 	public void deleteTodo(long id) {
 		Optional<Todo> todo = todoRepository.findById(id);
@@ -46,5 +48,5 @@ public class TodoService implements ITodoService {
 	public void saveTodo(Todo todo) {
 		todoRepository.save(todo);
 	}
-
+	
 }

@@ -1,76 +1,80 @@
 package co.edu.usco.pw.springboot_crud01.model;
 
-import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Clientes")
 public class Todo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-	
-	private String usuario;
+    private String description;
+    private String userName;
+    private Date targetDate;
+    private int cantidadVehiculos;
 
-	public String getUsuario() {
-		return usuario;
+    // Otros campos, getters y setters
+
+    public Todo(String name, String desc, Date targetDate2, boolean isDone) {
+		// TODO Auto-generated constructor stub
 	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
-
-	private int cantidadVehiculos;
-	
-	@OneToMany(mappedBy = "todo", fetch = FetchType.LAZY)
-	private List<Vehiculos> vehiculos;
-	
-	
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public int getCantidadVehiculos() {
-		return cantidadVehiculos;
-	}
-
-	public void setCantidadVehiculos(int cantidadVehiculos) {
-		this.cantidadVehiculos = cantidadVehiculos;
-	}
-
-	public List<Vehiculos> getVehiculos() {
-		return vehiculos;
-	}
-
-	public void setVehiculos(List<Vehiculos> vehiculos) {
-		this.vehiculos = vehiculos;
-	}
-
-	public Todo(int cantidadVehiculos, List<Vehiculos> vehiculos) {
-		super();
-		this.cantidadVehiculos = cantidadVehiculos;
-		this.vehiculos = vehiculos;
-	}
-
 
 	public Todo() {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	
-	
+	@PrePersist
+    protected void onCreate() {
+        this.targetDate = new Date();
+    }
 
-	}
+    // Getters y setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Date getTargetDate() {
+        return targetDate;
+    }
+
+    public void setTargetDate(Date targetDate) {
+        this.targetDate = targetDate;
+    }
+
+    public int getCantidadVehiculos() {
+        return cantidadVehiculos;
+    }
+
+    public void setCantidadVehiculos(int cantidadVehiculos) {
+        this.cantidadVehiculos = cantidadVehiculos;
+    }
+}
