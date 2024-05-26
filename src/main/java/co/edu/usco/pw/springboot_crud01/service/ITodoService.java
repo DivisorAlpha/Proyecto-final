@@ -9,8 +9,6 @@ public interface ITodoService {
 
 	List<Todo> getTodosByUser(String user);
 
-	Optional<Todo> getTodoById(long id);
-
 	void updateTodo(Todo todo);
 
 	void addTodo(String name, String desc, Date targetDate, boolean isDone);
@@ -19,4 +17,7 @@ public interface ITodoService {
 	
 	void saveTodo(Todo todo);
 
+	Todo getTodoById1(long id);
+	
+	void setVehicleType(long todoId, String tipoVehiculo);
 }

@@ -18,11 +18,15 @@ public class TodoService implements ITodoService {
 	public List<Todo> getTodosByUser(String user) {
 		return todoRepository.findByUserName(user);
 	}
-
-	@Override
+	
 	public Optional<Todo> getTodoById(long id) {
 		return todoRepository.findById(id);
 	}
+	
+	@Override
+    public Todo getTodoById1(long id) {
+        return todoRepository.findById(id).orElse(null);
+    }
 
 	@Override
 	public void updateTodo(Todo todo) {
@@ -48,5 +52,32 @@ public class TodoService implements ITodoService {
 	public void saveTodo(Todo todo) {
 		todoRepository.save(todo);
 	}
+	
+	public void setVehicleType(long todoId, String tipoVehiculo) {
+	    Todo todo = todoRepository.findById(todoId).orElseThrow();
+	    switch (tipoVehiculo) {
+	        case "motocicleta":
+	            todo.setMotocicleta(true);
+	            todo.setCarro(false);
+	            todo.setCarroPesado(false);
+	            break;
+	        case "carro":
+	            todo.setMotocicleta(false);
+	            todo.setCarro(true);
+	            todo.setCarroPesado(false);
+	            break;
+	        case "carroPesado":
+	            todo.setMotocicleta(false);
+	            todo.setCarro(false);
+	            todo.setCarroPesado(true);
+	            break;
+	        default:
+	            // Manejar caso no válido
+	            break;
+	    }
+	    todoRepository.save(todo);
+	}
+
+	
 	
 }

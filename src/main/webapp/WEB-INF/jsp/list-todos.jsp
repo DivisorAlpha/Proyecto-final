@@ -2,8 +2,11 @@
 <%@ include file="common/navigation.jsp"%>
 
 <div class="container">
-	<div>
-		<a type="button" class="btn btn-primary btn-md" href="/add-todo">Adicionar Usuario</a>
+	<div class="row">
+		<div class="col-md-6">
+			<a type="button" class="btn btn-primary btn-md" href="/add-todo">Adicionar
+				Usuario</a>
+		</div>
 	</div>
 	<br>
 	<div class="panel panel-primary">
@@ -14,31 +17,53 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th width="20%">Usuario</th>
-	                    <th width="20%">Fecha y Hora</th>
-	                    <th width="20%">Cantidad de Vehículos</th>
-	                    <th width="20%">Descripción</th>
-                    	<th width="20%"></th>
+						<th width="15%">Nombre</th>
+						<th width="15%">Placa</th>
+
+						<th width="20%">Fecha y Hora</th>
+						<th width="15%">Tipo de Vehículo</th>
+						<!-- Nueva columna -->
+						<th width="15%"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${todos}" var="todo">
 						<tr>
-							<td>${todo.userName}</td>
-							<td><fmt:formatDate value="${todo.targetDate}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
-							<td>${todo.cantidadVehiculos}</td>
-							<td>${todo.description}</td>
+							<td>${todo.nombre}</td>
+							<td>${todo.placa}</td>
+
+							<td><fmt:formatDate value="${todo.targetDate}"
+									pattern="dd/MM/yyyy HH:mm:ss" /></td>
+							<td><c:choose>
+									<c:when test="${todo.motocicleta}">
+                            Motocicleta
+                        </c:when>
+									<c:when test="${todo.carro}">
+                            Carro
+                        </c:when>
+									<c:when test="${todo.carroPesado}">
+                            Carro Pesado
+                        </c:when>
+									<c:otherwise>
+                            No especificado
+                        </c:otherwise>
+								</c:choose></td>
+								
 							<td><a type="button" class="btn btn-success"
-								href="/update-todo?id=${todo.id}">Actualizar</a>
-							<a type="button" class="btn btn-warning"
-								href="/delete-todo?id=${todo.id}">Eliminar</a></td>
+								href="/update-todo?id=${todo.id}">Cobrar</a></td>
+								
+								
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
+
+
 		</div>
 	</div>
-
 </div>
+
+
+<script src="js/list-todo.js" charset="UTF-8"></script>
 
 <%@ include file="common/footer.jsp"%>

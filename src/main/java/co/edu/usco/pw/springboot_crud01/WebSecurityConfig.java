@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/list-todos").hasAnyRole("USER")
 		.antMatchers("/add-todo").hasAnyRole("ADMIN")
 		.antMatchers("/delete-todo").hasAnyRole("ADMIN")
-		.antMatchers("/update-todo").hasAnyRole("ADMIN")
+		.antMatchers("/update-todo").permitAll()
 		.anyRequest().authenticated()
 		.and()
 		.formLogin()
@@ -34,7 +34,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configurerSecurityGlobal(AuthenticationManagerBuilder builder) throws Exception {
-		
 		builder.jdbcAuthentication()
 		.dataSource(dataSource)
 		.passwordEncoder(passwordEncoder)
