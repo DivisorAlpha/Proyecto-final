@@ -18,6 +18,6 @@
     <a href="/list-todos" class="btn btn-primary mt-3">Volver a la Lista</a>
 </div>
 
-
+<script src="js/cobro.js" charset="UTF-8"></script>
 
 <%@ include file="common/footer.jsp"%>
