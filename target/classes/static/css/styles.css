@@ -1,1 +1,19 @@
+/* CSS para cambiar el color de fondo del enlace cuando el mouse pasa por encima */
+.nav-link-hover {
+    transition: background-color 0.3s ease;
+}
 
+.nav-link-hover:hover {
+    background-color: #f8f9fa; /* Cambia esto al color que desees */
+    color: #000; /* Cambia esto al color de texto que desees */
+}
+.footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	background-color: black;
+	color: white;
+	height: 100px;
+	text-align: center;
+}

@@ -1,8 +1,13 @@
 package co.edu.usco.pw.springboot_crud01.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import co.edu.usco.pw.springboot_crud01.model.Todo;
@@ -52,31 +57,33 @@ public class TodoService implements ITodoService {
 	public void saveTodo(Todo todo) {
 		todoRepository.save(todo);
 	}
+
 	
-	public void setVehicleType(long todoId, String tipoVehiculo) {
-	    Todo todo = todoRepository.findById(todoId).orElseThrow();
-	    switch (tipoVehiculo) {
-	        case "motocicleta":
-	            todo.setMotocicleta(true);
-	            todo.setCarro(false);
-	            todo.setCarroPesado(false);
-	            break;
-	        case "carro":
-	            todo.setMotocicleta(false);
-	            todo.setCarro(true);
-	            todo.setCarroPesado(false);
-	            break;
-	        case "carroPesado":
-	            todo.setMotocicleta(false);
-	            todo.setCarro(false);
-	            todo.setCarroPesado(true);
-	            break;
-	        default:
-	            // Manejar caso no válido
-	            break;
-	    }
-	    todoRepository.save(todo);
-	}
+	
+	private List<Todo> todos;
+
+    @PostConstruct
+    public void init() {
+        this.todos = new ArrayList<>();  // Inicializar con una lista vacía o con datos de prueba
+        // Añadir algunos datos de ejemplo
+        this.todos.add(new Todo(1, "Tarea de ejemplo 1", new Date()));
+        this.todos.add(new Todo(2, "Tarea de ejemplo 2", new Date()));
+    }
+
+    public List<Todo> getTodos() {
+        return todos;
+    }
+
+    public List<Todo> searchTodos(String search) {
+        return todos.stream()
+                .filter(todo -> {
+                    String nombre = todo.getNombre();
+                    return nombre != null && nombre.toLowerCase().contains(search.toLowerCase());
+                })
+                .collect(Collectors.toList());
+    }
+
+	
 
 	
 	

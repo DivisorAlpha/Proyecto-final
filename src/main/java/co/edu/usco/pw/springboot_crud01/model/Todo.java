@@ -20,22 +20,27 @@ public class Todo {
     private String userName;
     private Date targetDate;
     private Date salidaVehiculo;
+    private String tipoVehiculo;
     private String placa;
-    private boolean motocicleta; // Nuevo campo para el checkbox
-    private boolean carro;
-    private boolean carroPesado;
     private double precio;
-    private double telefono;
+    private String telefono;
     
-   
    
 	
 
-	public double getTelefono() {
+	public String getTipoVehiculo() {
+		return tipoVehiculo;
+	}
+
+	public void setTipoVehiculo(String tipoVehiculo) {
+		this.tipoVehiculo = tipoVehiculo;
+	}
+
+	public String getTelefono() {
 		return telefono;
 	}
 
-	public void setTelefono(double telefono) {
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 
@@ -63,29 +68,7 @@ public class Todo {
 		this.nombre = nombre;
 	}
 
-	public boolean isCarro() {
-		return carro;
-	}
-
-	public void setCarro(boolean carro) {
-		this.carro = carro;
-	}
-
-	public boolean isCarroPesado() {
-		return carroPesado;
-	}
-
-	public void setCarroPesado(boolean carroPesado) {
-		this.carroPesado = carroPesado;
-	}
-
-	public boolean isMotocicleta() {
-		return motocicleta;
-	}
-
-	public void setMotocicleta(boolean motocicleta) {
-		this.motocicleta = motocicleta;
-	}
+	
 
 	public String getPlaca() {
 		return placa;
@@ -96,6 +79,10 @@ public class Todo {
 	}
 
 	public Todo(String name, String desc, Date targetDate2, boolean isDone) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Todo(int i, String string, Date date) {
 		// TODO Auto-generated constructor stub
 	}
 

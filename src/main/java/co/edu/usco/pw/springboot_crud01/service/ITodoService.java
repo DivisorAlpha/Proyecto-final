@@ -18,6 +18,7 @@ public interface ITodoService {
 	void saveTodo(Todo todo);
 
 	Todo getTodoById1(long id);
+
+	List<Todo> searchTodos(String search);
 	
-	void setVehicleType(long todoId, String tipoVehiculo);
 }

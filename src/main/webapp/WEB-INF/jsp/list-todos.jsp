@@ -1,13 +1,28 @@
 <%@ include file="common/header.jsp"%>
 <%@ include file="common/navigation.jsp"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<div class="container">
+<div class="container mt-2">
 	<div class="row">
-		<div class="col-md-6">
-			<a type="button" class="btn btn-primary btn-md" href="/add-todo">Adicionar
-				Usuario</a>
-		</div>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+            <div class="col-md-6">
+                <a type="button" class="btn btn-primary btn-md" href="${pageContext.request.contextPath}/add-todo">Nuevo Cliente</a>
+            </div>
+        </sec:authorize>
 	</div>
+	<div class="row my-3 justify-content-center">
+            <div class="col-md-6">
+                <form id="searchForm" action="${pageContext.request.contextPath}/search" method="get">
+                    <div class="form-group mb-2">
+                        <input type="text" class="form-control" id="search" name="search" placeholder="Buscar..." value="${search}">
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
 	<br>
 	<div class="panel panel-primary">
 		<div class="panel-heading">
@@ -21,7 +36,7 @@
 						<th width="15%">Placa</th>
 
 						<th width="20%">Fecha y Hora</th>
-						<th width="15%">Tipo de Vehículo</th>
+						<th width="15%">Tipo de VehÃ­culo</th>
 						<!-- Nueva columna -->
 						<th width="15%"></th>
 					</tr>
@@ -34,30 +49,13 @@
 
 							<td><fmt:formatDate value="${todo.targetDate}"
 									pattern="dd/MM/yyyy HH:mm:ss" /></td>
-							<td><c:choose>
-									<c:when test="${todo.motocicleta}">
-                            Motocicleta
-                        </c:when>
-									<c:when test="${todo.carro}">
-                            Carro
-                        </c:when>
-									<c:when test="${todo.carroPesado}">
-                            Carro Pesado
-                        </c:when>
-									<c:otherwise>
-                            No especificado
-                        </c:otherwise>
-								</c:choose></td>
-								
+							<td>${todo.tipoVehiculo}</td>
 							<td><a type="button" class="btn btn-success"
-								href="/update-todo?id=${todo.id}">Cobrar</a></td>
-								
-								
+								href="/cobro?id=${todo.id}">Cobrar</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-
 
 		</div>
 	</div>
